@@ -18,6 +18,18 @@ const Navbar = () => {
     setFilteredData(filtered);
   };
 
+  const renderSearchResults = () => {
+    if (searchText.length > 0 && filteredData.length === 0) {
+      return <div className="text-gray-400">Not Found</div>;
+    }
+
+    return searchText.length > 0 && filteredData.map((item) => (
+      <div className="flex flex-col" key={item.id}>
+        <div>{item.email}</div>
+      </div>
+    ));
+  };
+
   return (
     <nav className="flex justify-between bg-indigo-900 text-white py-2">
       <div className="logo">
@@ -33,14 +45,11 @@ const Navbar = () => {
               className="text-black"
               onChange={handleChangeSearch}
               value={searchText}
+              placeholder="Search Here.." 
+              autoComplete="on"
             />
           </li>
-          <button>Search</button>
-          {searchText.length > 0 && filteredData.map((item) => (
-            <div className="flex flex-col" key={item.id}>
-              <div>{item.email}</div>
-            </div>
-          ))}
+          {renderSearchResults()}
         </div>
       </ul>
     </nav>
